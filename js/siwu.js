@@ -1,20 +1,56 @@
+// initMap()
 function initMap() {
-        // Piippukatu 2:
-        var myLatLng = {lat: 62.24162229999999, lng: 25.7597309};
-	document.getElementById('p1').innerHTML = "Piippukatu 2<br>lat: "
-                                                  + myLatLng.lat.toFixed(2) + " lng: " + myLatLng.lng.toFixed(2);
+    // create a map, point to the central of Finland
+    var map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 62.2426034, lng: 25.7472567},
+        zoom: 7
+    });
 
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 12,
-          center: myLatLng
-        });
+    // content string will display course info texts
+    var contentString = "";
+    // info window will display above content string
+    var infowindow = new google.maps.InfoWindow({
+        content: contentString
+    });
 
+    // load and show markers
+    $.ajax({
+		url: 'data/kentatC.json'
+    }).fail(function() {
+            console.log("fail!");
+    }).done(function(data) {
+
+    // loop through all courses
+    $.each(data.results, function(index,shop) {
+        // get position lat and lng
+        var kenttaLatLng = {lat: shop.geometry.location.lat, lng: shop.geometry.location.lng};
+        // marker
         var marker = new google.maps.Marker({
-          position: myLatLng,
-          map: map,
-          title: 'I am here!'
+            position: kenttaLatLng,
+            map: map,
+            // include data to marker -> show in infowindow
+            title: shop.name,
+            osoite: shop.vicinity,
         });
-    }
+
+            // marker event handling
+            marker.addListener('click', function() {
+                infowindow.setContent(
+                    '<div id="content">'+
+                    '<h1 id="heading">'+this.title+'</h1>'+
+                    '<div id="bodyContent">'+
+                    '<p>'+
+                    'Osoite:'+this.osoite+'<br/>'+
+                    '</p>'+
+                    '</div>'+
+                    '</div>'
+                );
+                // show info window
+                infowindow.open(map, this);
+            });
+        }); // each
+    }); // ajax done
+} // init map
 /*
   var map, places, iw;
   var markers = [];
