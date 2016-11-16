@@ -3,7 +3,7 @@ function initMap() {
     // create a map, point to the central of Finland
     var map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 62.2426034, lng: 25.7472567},
-        zoom: 7
+        zoom: 12
     });
 
     // content string will display course info texts
