@@ -46,7 +46,7 @@ function initMap() {
                     '</div>'+
 			'<button onclick="Ostotapahtuma()">Osta</button>'+
 			'<button onclick="myyntitapahtuma()">Myy</button>'+
-			'Tuotto: '+this.place_id'+
+			'Tuotto: '+this.place_id'<br/>'+
                     '</div>'
                 );
                 // show info window
