@@ -5,12 +5,7 @@ function initMap() {
         center: {lat: 62.2426034, lng: 25.7472567},
         zoom: 12
     });
-function myFunction() {
-    var x = document.createElement("BUTTON");
-    var t = document.createTextNode("Click me");
-    x.appendChild(t);
-    document.body.appendChild(x);
-}
+
     // content string will display course info texts
     var contentString = "";
     // info window will display above content string
@@ -49,7 +44,9 @@ function myFunction() {
                     'Osoite:'+this.osoite+'<br/>'+
                     '</p>'+
                     '</div>'+
-			'<button onclick="myFunction()">Try it</button>'+
+			'<button onclick="Ostotapahtuma()">Osta</button>'+
+			'<button onclick="myyntitapahtuma()">Myy</button>'+
+			'Tuotto: '+this.place_id'+
                     '</div>'
                 );
                 // show info window
