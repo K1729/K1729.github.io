@@ -44,6 +44,8 @@ function initMap() {
                     'Osoite:'+this.osoite+'<br/>'+
                     '</p>'+
                     '</div>'+
+			'<button onclick="Ostotapahtuma()">Osta</button>'+
+			'<button onclick="myyntitapahtuma()">Myy</button>'+
 			
                     '</div>'
                 );
