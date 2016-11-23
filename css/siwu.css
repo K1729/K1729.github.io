@@ -9,6 +9,19 @@ html, body {
     height: 480px;
     width:  640px;
 }
+#buttonspace{
+
+    
+ 
+    background-color: yellow;
+    padding: 5px;
+    border: 1px solid #999;
+    text-align: center;
+  
+
+    padding-left: 10px;
+
+}
 #floating-panel {
     position: absolute;
     top: 10px;
