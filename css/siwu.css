@@ -12,7 +12,7 @@ html, body {
 #buttonspace{
 
     
- float:right;
+ float:up;
     background-color: yellow;
     padding: 5px;
     border: 1px solid #999;
