@@ -5,7 +5,12 @@ function initMap() {
         center: {lat: 62.2426034, lng: 25.7472567},
         zoom: 12
     });
-
+function myFunction() {
+    var x = document.createElement("BUTTON");
+    var t = document.createTextNode("Click me");
+    x.appendChild(t);
+    document.body.appendChild(x);
+}
     // content string will display course info texts
     var contentString = "";
     // info window will display above content string
@@ -40,6 +45,7 @@ function initMap() {
                     '<h1 id="heading">'+this.title+'</h1>'+
                     '<div id="bodyContent">'+
                     '<p>'+
+			<button onclick="myFunction()">Try it</button>+
                     'Osoite:'+this.osoite+'<br/>'+
                     '</p>'+
                     '</div>'+
