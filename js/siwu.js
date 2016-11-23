@@ -45,10 +45,11 @@ function myFunction() {
                     '<h1 id="heading">'+this.title+'</h1>'+
                     '<div id="bodyContent">'+
                     '<p>'+
-			<button onclick="myFunction()">Try it</button>+
+			
                     'Osoite:'+this.osoite+'<br/>'+
                     '</p>'+
                     '</div>'+
+			'<button onclick="myFunction()">Try it</button>'+
                     '</div>'
                 );
                 // show info window
