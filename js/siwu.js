@@ -12,6 +12,9 @@ function initMap() {
     var infowindow = new google.maps.InfoWindow({
         content: contentString
     });
+    
+    // This is to be used in later foreach loop in ajax.
+    var number = 0;
 
     // load and show markers
     $.ajax({
@@ -20,18 +23,18 @@ function initMap() {
             console.log("fail!");
     }).done(function(data) {
 
-    // loop through all courses
-    $.each(data.results, function(index,shop) {
-        // get position lat and lng
-        var kenttaLatLng = {lat: shop.geometry.location.lat, lng: shop.geometry.location.lng};
-        // marker
-        var marker = new google.maps.Marker({
-            position: kenttaLatLng,
-            map: map,
-            // include data to marker -> show in infowindow
-            title: shop.name,
-            osoite: shop.vicinity,
-        });
+        // loop through all courses
+        $.each(data.results, function(index,shop) {
+            // get position lat and lng
+            var kenttaLatLng = {lat: shop.geometry.location.lat, lng: shop.geometry.location.lng};
+            // marker
+            var marker = new google.maps.Marker({
+                position: kenttaLatLng,
+                map: map,
+                // include data to marker -> show in infowindow
+                title: shop.name,
+                osoite: shop.vicinity,
+            });
 
             // marker event handling
             marker.addListener('click', function() {
@@ -40,17 +43,28 @@ function initMap() {
                     '<h1 id="heading">'+this.title+'</h1>'+
                     '<div id="bodyContent">'+
                     '<p>'+
-			
+
                     'Osoite:'+this.osoite+'<br/>'+
                     '</p>'+
                     '</div>'+
-			'<button onclick="Ostotapahtuma()">Osta</button>'+
-			'<button onclick="myyntitapahtuma()">Myy</button>'+
-			
+            '<input type="submit" class="button" name"buy" value="Osta" />' +
+            '<button onclick="myyntitapahtuma()">Myy</button>'+
+
                     '</div>'
                 );
                 // show info window
                 infowindow.open(map, this);
+                
+                // button handler. This works
+                $('.button').click(function(){
+                    var clickBtnValue = $(this).val();
+                    var ajaxurl = 'ajax.php',
+                    data =  {'action': clickBtnValue};
+                    $.post(ajaxurl, data, function (response) {
+                        // Response div goes here.
+                        alert("action performed successfully");
+                    });
+                });
             });
         }); // each
     }); // ajax done
