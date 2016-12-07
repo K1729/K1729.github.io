@@ -18,7 +18,7 @@ function initMap() {
 
     // load and show markers
     $.ajax({
-		url: 'data/kentatC.json'
+		url: 'user/player.json'
     }).fail(function() {
             console.log("fail!");
     }).done(function(data) {
@@ -34,6 +34,8 @@ function initMap() {
                 // include data to marker -> show in infowindow
                 title: shop.name,
                 osoite: shop.vicinity,
+                owner: shop.owner,
+                number: shop.number
             });
 
             // marker event handling
@@ -42,27 +44,28 @@ function initMap() {
                     '<div id="content">'+
                     '<h1 id="heading">'+this.title+'</h1>'+
                     '<div id="bodyContent">'+
-                    '<p>'+
-
-                    'Osoite:'+this.osoite+'<br/>'+
-                    '</p>'+
-                    '</div>'+
+                    '<p>' +
+                    'Osoite: ' + this.osoite + '<br/>' +
+                    'Omistaja: ' + this.owner + '<br/>' +
+                    '</p>' +
+                    '</div>' +
             '<input type="submit" class="button" name"buy" value="Osta" />' +
-            '<button onclick="myyntitapahtuma()">Myy</button>'+
+            '<input type="submit" class="button" name"sell" value="Myy" />' +
 
                     '</div>'
                 );
+                
+                var tits = this.number;
                 // show info window
                 infowindow.open(map, this);
-                
-                // button handler. This works
+                // button handler. This works. Voisi vaihtaa tuon ".button"
                 $('.button').click(function(){
-                    var clickBtnValue = $(this).val();
-                    var ajaxurl = 'ajax.php',
-                    data =  {'action': clickBtnValue};
-                    $.post(ajaxurl, data, function (response) {
+                    //data =  {'action': (new Array($(this).val(), number))}; 
+                    data = $(this).val;
+                    
+                    $.post("ajax.php", {"data[]": [data, tits]}, function (response) {
                         // Response div goes here.
-                        alert("action performed successfully");
+                        alert(response);
                     });
                 });
             });

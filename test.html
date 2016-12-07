@@ -1,19 +1,6 @@
 <html>
     <head>
         <title>PHP lomake</title>
-        <script language="php">
-            function AddOwner() {
-                $jsonString = file_get_contents("data/kentatC.json");
-                $data = json_decode($jsonString, true);
-                $results = $data["results"];
-                $number = $_GET["buy"];
-
-                $thing = $results[$number];
-                $thing["owner"] = "Jari";
-                $results["$number"] = $thing;
-                echo var_dump($results);
-            }
-        </script>
     </head>
     
     <body>
@@ -25,30 +12,25 @@
         
         <p>Stars: <script language="php">
             if (isset($_GET["nappi"])) {
-                AddOwner();
-                /*
                 $jsonString = file_get_contents("data/kentatC.json");
                 $data = json_decode($jsonString, true);
                 $results = $data["results"];
-                $number = $_GET["buy"];
-
-                $thing = $results[$number];
-                $thing["owner"] = "Jari";
-                $results["$number"] = $thing;
+                $number = 0;
+                
                 foreach ($results as $thing) {
                     $hinta = rand(20000, 50000);
                     $thing["price"] = $hinta;
-                    $thing["owner"] = "Jari";
-                    //echo var_dump($thing);
+                    $thing["owner"] = "Computer";
+                    $thing["number"] = $number;
+                    $thing["level"] = 0;
                     $results[$number] = $thing;
                     $number++;
                 }
+                
                 echo var_dump($results);
-                //$data["results"] = $results;
-                //$jsonString = json_encode($data);
-                //file_put_contents("user/new_file.json", $jsonString);
-                echo "Success!";
-                */
+                $data["results"] = $results;
+                $jsonString = json_encode($data);
+                file_put_contents("user/player.json", $jsonString);
             }
             </script></p>
     </body>
