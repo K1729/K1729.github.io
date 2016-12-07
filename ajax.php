@@ -1,12 +1,12 @@
 <script language ="php">
-    var $number = 0;
+    $number = 0;
     
-    if (isset($_POST['data[]'])) {
-        $stuff = $_POST['data[]'];
-        echo "Got it!";
-        switch ($stuff[0]) {
+    if (isset($_POST['action'])) {
+        echo $_POST['action'];
+        var_dump($_POST['stuff']);
+        switch ($_POST['action']) {
             case 'buy':
-                $number = $stuff[1];
+                $number = $_POST['stuff'];
                 Buy();
                 break;
             case 'sell':

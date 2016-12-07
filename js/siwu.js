@@ -1,3 +1,9 @@
+function buyItem(el) {
+    itemId = el;
+    $.post("ajax.php", {'action': 'buy', 'stuff': itemId})
+    .done(function(data) {alert("Data loaded: " + data)});
+}
+
 // initMap()
 function initMap() {
     // create a map, point to the central of Finland
@@ -37,9 +43,9 @@ function initMap() {
                 owner: shop.owner,
                 number: shop.number
             });
-
             // marker event handling
             marker.addListener('click', function() {
+                var element = this.number;
                 infowindow.setContent(
                     '<div id="content">'+
                     '<h1 id="heading">'+this.title+'</h1>'+
@@ -47,26 +53,22 @@ function initMap() {
                     '<p>' +
                     'Osoite: ' + this.osoite + '<br/>' +
                     'Omistaja: ' + this.owner + '<br/>' +
+                    'Id: ' + this.number + '<br/>' +
                     '</p>' +
                     '</div>' +
-            '<input type="submit" class="button" name"buy" value="Osta" />' +
+            '<button type="button" name="buy" onclick="buyItem(element)">Osta</button>' +
             '<input type="submit" class="button" name"sell" value="Myy" />' +
-
                     '</div>'
                 );
                 
-                var tits = this.number;
                 // show info window
                 infowindow.open(map, this);
                 // button handler. This works. Voisi vaihtaa tuon ".button"
                 $('.button').click(function(){
-                    //data =  {'action': (new Array($(this).val(), number))}; 
-                    data = $(this).val;
-                    
-                    $.post("ajax.php", {"data[]": [data, tits]}, function (response) {
-                        // Response div goes here.
-                        alert(response);
-                    });
+                    //data =  {'action': (new Array($(this).val(), number))};
+                    //$this = $(this);
+                    //alert($this);
+                    buyItem(1);
                 });
             });
         }); // each
