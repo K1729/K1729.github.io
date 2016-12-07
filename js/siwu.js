@@ -4,6 +4,12 @@ function buyItem(el) {
     .done(function(data) {alert("Data loaded: " + data)});
 }
 
+function sellItem(el) {
+    itemId = el;
+    $.post("ajax.php", {'action': 'sell', 'stuff': itemId})
+    .done(function(data) {alert("Data loaded: " + data)});
+}
+
 // initMap()
 function initMap() {
     // create a map, point to the central of Finland
@@ -56,20 +62,13 @@ function initMap() {
                     'Id: ' + this.number + '<br/>' +
                     '</p>' +
                     '</div>' +
-            '<button type="button" name="buy" onclick="buyItem(element)">Osta</button>' +
-            '<input type="submit" class="button" name"sell" value="Myy" />' +
+            '<button type="button" name="buy" onclick="buyItem(' + element + ')">Osta</button>' +
+            '<button type="button" name="buy" onclick="sellItem(' + element + ')">Myy</button>' +
                     '</div>'
                 );
                 
                 // show info window
                 infowindow.open(map, this);
-                // button handler. This works. Voisi vaihtaa tuon ".button"
-                $('.button').click(function(){
-                    //data =  {'action': (new Array($(this).val(), number))};
-                    //$this = $(this);
-                    //alert($this);
-                    buyItem(1);
-                });
             });
         }); // each
     }); // ajax done
