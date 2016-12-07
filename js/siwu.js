@@ -10,6 +10,15 @@ function sellItem(el) {
     .done(function(data) {alert("Data loaded: " + data)});
 }
 
+function createPlayer(){
+    var x, text;
+    x = document.getElementById("player").value;
+    if (isNaN(x)) {
+        $.post("ajax.php", {'name': x,})
+        .done(function(data) {alert("Data loaded: ")});
+    }
+}
+
 // initMap()
 function initMap() {
     // create a map, point to the central of Finland
