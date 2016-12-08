@@ -2,23 +2,31 @@
 <html>
     <head>
       <meta name="description" content="I see you" />
-      <title>TUO git</title>
+      <title>Here be dragons</title>
       <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
       <meta charset="utf-8">
       <link rel="stylesheet" type="text/css" href="css/siwu.css">
     </head>
     <body>
-        <div id="map"></div>
-        <div id="buttonspace">
-            <input type="text" id="player" placeholder="Pelaajan nimi">
-            <button type="button" onclick="createPlayer()">Luo pelaaja</button>
-            <p id="hello"></p>
-        </div>
-        
-        <script src="js/jquery-3.1.1.min.js"></script>
-        <script src="js/siwu.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJCbgw8Q_LEn-YVFwFTQ3GQZPGfBKtgcc&callback=initMap" async defer></script>
+        <section>
+            <h1>Web- ja webpalvelinohjelmoinnin harjoitustyö</h1>
+            <a href="peli.html">Tästä pääsee peliin</a>
+            <h3>Tavoite</h3>
+            <p>
+                Tavoitteena on luoda webselaimessa toimiva peli, jonka tavoitteena on ostaa ja myydä asuntoja tienataksesi rahaa. Peli on suunniteltu siten että pelaaja progressio, eli omistetut talot ja rahat, tallentuu json tiedostoon palvelinpuolelle.<br>
+                <br>
+            </p>
+            <h3>Työn selostus</h3>
+            <p>
+                Pelin kartta luodaan samalla tavalla kuin kurssin golfkenttä tehtävässä. Mutta nyt kentät haetaan meidän omasta json tiedostosta joka haettiin googlelta. <br><br>
+                
+                Tähän tiedostoon lisätään hinnat, omistaja ja muita tietoja PHP skriptillä ja tallennetaan player.json tiedostoon. Tähän tarvittavat skriptit löytyy test.html tiedostosta. Näitä ei lisätty ajax.php tiedostoon, koska emme luultavasti ehdi lisätä tähän muita pelaajia. <br><br>
+                
+                js/siwu.js tiedosto luo ajaxin avulla karttaan markkerit ja listenerit. Kuten golfkentät esimerkissä, kun markkereita näpäytetään niistä tulee ikkuna jossa näkyy paikan nimi, omistaja, id:n ja pari nappia. Näitä painamalla siirrytään javascriptiin funktioon joka kutsuu uuden jQuery post funktion joka lähettää paikan id:n ja myynti tai osto käskyn serverille. <br><br>
+                
+                Serveripuolella PHP lukee if lausekkeilla annetun käskyn ja suorittaa sen määräämän skriptin. PHP käyttää file_get/put_contents funktiota ladatakseen player.json tiedoston arrayhyn. Arrayta muokataan lisäämällä uusi omistaja tai korottamalla asunnon tasoa. Kun serveri on saanut täällä tehtyä hommansa se voisi lähettää takaisin ajaxille viestin että se voi päivittää karttansa. En vielä tosin keksinyt miten implementoida tuota, joten pelaajan täytyy päivittää sivu jotta muutokset tulevat näkyviin.
+                <br>
+            </p>
+        </section>
     </body>
 </html>
-
-<!--<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=places"></script>-->
