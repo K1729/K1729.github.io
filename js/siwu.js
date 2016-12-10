@@ -1,42 +1,57 @@
+var map;
+
 function buyItem(el) {
     itemId = el;
     $.post("ajax.php", {'action': 'buy', 'stuff': itemId})
-    .done(function(data) {alert("Data loaded: " + data)});
+    .done(function(data) {
+        initMap();
+        alert(data)});
 }
 
 function sellItem(el) {
     itemId = el;
     $.post("ajax.php", {'action': 'sell', 'stuff': itemId})
-    .done(function(data) {alert("Data loaded: " + data)});
+    .done(function(data) {
+        initMap();
+        alert(data);
+    });// done
 }
 
-function createPlayer(){
+function selectPlayer() {
     var x, text;
-    x = document.getElementById("player").value;
+    x = document.getElementById("name").value;
     if (isNaN(x)) {
         $.post("ajax.php", {'name': x,})
-        .done(function(data) {alert("Data loaded: ")});
+        .done(function(data) {
+            money();
+            alert(data);
+        });
     }
+}
+
+function money() {
+    $.post("ajax.php", {'action': 'money'})
+    .done(function(data) {
+        document.getElementById("money").innerHTML = data + "€";
+    });// done
 }
 
 // initMap()
 function initMap() {
     // create a map, point to the central of Finland
-    var map = new google.maps.Map(document.getElementById('map'), {
+    map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 62.2426034, lng: 25.7472567},
         zoom: 12
     });
-
+    
     // content string will display course info texts
     var contentString = "";
+    
     // info window will display above content string
     var infowindow = new google.maps.InfoWindow({
         content: contentString
     });
     
-    // This is to be used in later foreach loop in ajax.
-    var number = 0;
-
     // load and show markers
     $.ajax({
 		url: 'user/player.json'
@@ -58,6 +73,7 @@ function initMap() {
                 owner: shop.owner,
                 number: shop.number
             });
+            
             // marker event handling
             marker.addListener('click', function() {
                 var element = this.number;
@@ -81,6 +97,7 @@ function initMap() {
             });
         }); // each
     }); // ajax done
+    money();
 } // init map
 /*
   var map, places, iw;

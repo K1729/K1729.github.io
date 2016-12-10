@@ -1,4 +1,5 @@
 <script language ="php">
+    $name = "";
     
     if (isset($_POST['action'])) {
         switch ($_POST['action']) {
@@ -12,26 +13,33 @@
                 //var_dump($number);
                 Sell($number);
                 break;
+            case 'money':
+                $jsonString = file_get_contents("user/player.json");
+                $data = json_decode($jsonString, true);
+                echo $data[$data["player"]];
+                break;
         }
     }
+    
     if (isset($_POST['name'])) {
         $name = $_POST['name'];
         
         $jsonString = file_get_contents("user/player.json");
         $data = json_decode($jsonString, true);
-        $results = $data["results"];
         
-        $thing = $results[$number];
-        if ($thing["hinta"] > 30000){
-            echo "No can do. Maksaa liikaa.";
+        $data["player"] = $name;
+        
+        if (is_null($data[$name])) {
+            $data[$name] = 30000;
+            echo "Player ", $name, " was created!";
         }
         else {
-            $thing["owner"] = "Computer";
-            $results["$number"] = $thing;
+            $data["Player"] = $name;
+            echo "Player ", $name, " was loaded!";
         }
         
-        $data["results"] = $results;
         $jsonString = json_encode($data);
+        file_put_contents("user/player.json", $jsonString);
     }
 
     function Sell($number) {
@@ -40,35 +48,54 @@
         $results = $data["results"];
         
         $thing = $results[$number];
-        $thing["owner"] = "Computer";
-        $results["$number"] = $thing;
         
-        $data["results"] = $results;
-        $jsonString = json_encode($data);
-        file_put_contents("user/player.json", $jsonString);
-        
-        echo "Item was sold!";
+        if ($thing["owner"] == $data["player"]) {
+            $thing["owner"] = "Computer";
+            $data[$data["player"]] += $thing["price"];
+            $results[$number] = $thing;
+
+            $data["results"] = $results;
+            $jsonString = json_encode($data);
+            file_put_contents("user/player.json", $jsonString);
+
+            echo "Item was sold!";
+            }
+        else {
+            echo "You don't own this house!";
+        }
     }
     
     function Buy($number) {
+        // Opens the player file
         $jsonString = file_get_contents("user/player.json");
         $data = json_decode($jsonString, true);
+        // Opens the results array from the data file
         $results = $data["results"];
         
+        // Gets certain place from results array
         $thing = $results[$number];
         $raha = $thing["price"];
-        if ($raha > 30000) {
-            echo "No can do. Maksaa liikaa.";
+        
+        if ($thing["owner"] == $data["player"]) {
+            echo "You already own this place!";
         }
         else {
-            $thing["owner"] = "Computer";
-            $results["$number"] = $thing;
-            echo "Item was bought!";
+            //This checks if the current player has enough money.
+            if ($raha > $data[$data["player"]]) {
+                echo "No can do. Maksaa liikaa.";
+            }
+            else {
+                // Change the owner to current player
+                $thing["owner"] = $data["player"];
+                $data[$data["player"]] -= $thing["price"];
+                $results[$number] = $thing;
+                echo "Item was bought!";
+            }
+
+            $data["results"] = $results;
+            $jsonString = json_encode($data);
+            file_put_contents("user/player.json", $jsonString);
         }
-        
-        $data["results"] = $results;
-        $jsonString = json_encode($data);
-        file_put_contents("user/player.json", $jsonString);
         
     }
 </script>

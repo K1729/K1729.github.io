@@ -10,9 +10,9 @@
     <body>
         <div id="map"></div>
         <div id="buttonspace">
-            <input type="text" id="player" placeholder="Pelaajan nimi">
-            <button type="button" onclick="createPlayer()">Luo pelaaja</button>
-            <p id="hello"></p>
+            <p id="money"></p>
+            <input type="text" id="name" value="<?php echo  json_decode(file_get_contents('user/player.json'), true)['player'];?>">
+            <button type="button" onclick="selectPlayer()">Valitse pelaaja</button>
         </div>
         
         <script src="js/jquery-3.1.1.min.js"></script>
@@ -20,5 +20,3 @@
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJCbgw8Q_LEn-YVFwFTQ3GQZPGfBKtgcc&callback=initMap" async defer></script>
     </body>
 </html>
-
-<!--<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=places"></script>-->
